@@ -22,6 +22,10 @@ Thumbs.db
 # OSX files
 .DS_Store
 
+# Secret  Properties
+/flavor.properties
+/key.properties
+
 # Android Studio
 *.iml
 .idea

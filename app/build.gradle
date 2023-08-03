@@ -3,27 +3,73 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+final def keystoreProperties = new Properties()
+final def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+final def currentFlavorProperties = new Properties()
+final def currentFlavorPropertiesFile = rootProject.file('flavor.properties')
+currentFlavorProperties.load(new FileInputStream(currentFlavorPropertiesFile))
+
+final def flavorProperties = new Properties()
+final def flavorPropertiesFile = rootProject.file(currentFlavorProperties['flavorPropertiesFileName'])
+flavorProperties.load(new FileInputStream(flavorPropertiesFile))
+
 android {
-    namespace 'com.example.githubtrends'
-    compileSdk 33
+    namespace 'mwaris.dev.githubtrends'
+    compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.example.githubtrends"
-        minSdk 21
-        targetSdk 33
+        applicationId flavorProperties['applicationId']
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_API_URL", "\"${flavorProperties['baseApiUrl']}\""
+        versionNameSuffix flavorProperties['versionNameSuffix']
+        manifestPlaceholders.appName = flavorProperties['appName']
+
         vectorDrawables {
             useSupportLibrary true
         }
     }
 
-    buildTypes {
+    signingConfigs {
+        debug {
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storePassword "android"
+            storeFile file("debug.keystore")
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
         release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storePassword keystoreProperties['storePassword']
+            storeFile file(keystoreProperties['storeFile'])
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -34,6 +80,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
+        buildConfig = true
         compose true
     }
     composeOptions {
