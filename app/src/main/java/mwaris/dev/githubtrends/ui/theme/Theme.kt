@@ -1,4 +1,4 @@
-package com.example.githubtrends.ui.theme
+package mwaris.dev.githubtrends.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.example.githubtrends
+package mwaris.dev.githubtrends
 
 import org.junit.Test
 

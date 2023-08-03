@@ -1,4 +1,4 @@
-package com.example.githubtrends.ui.theme
+package mwaris.dev.githubtrends.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
