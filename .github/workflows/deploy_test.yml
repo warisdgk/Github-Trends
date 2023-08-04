@@ -51,6 +51,12 @@ jobs:
       - name: setup testing as default env
         run: echo flavorPropertiesFileName=${{env.FLAVOR_PROP_TESTING}} > flavor.properties
 
+      - name: Cat flavor.properties
+        run: cat flavor.properties
+
+      - name: Create key.properties with keystore password
+        run: echo ${{secrets.ANDROID_KEY_PROPERTIES}} | base64 --decode > key.properties
+
       - name: Download Android Dependencies
         run: ./gradlew assembleDebug
 
