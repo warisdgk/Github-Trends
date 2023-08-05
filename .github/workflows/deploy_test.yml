@@ -96,11 +96,14 @@ jobs:
         with:
           name: app-debug-androidTest
 
+      - name: Print  Directory Structure After Download
+        run:  find . | sed -e "s/[^-][^\/]*\//  |/g" -e "s/|\([^ ]\)/|-\1/"
+
       - name: Google Cloud SDK Authentication
         id: auth
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          credentials_json: ${{secrets.GCP_CREDENTIALS}}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
