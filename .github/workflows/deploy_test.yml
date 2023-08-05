@@ -112,7 +112,7 @@ jobs:
         run: gcloud firebase test android models list
 
       - name: Execute Instrumentation Tests on  Firebase Test Lab
-        run: gcloud firebase test android run  --type instrumentation  --app app-debug.apk  --test app-debug-androidTest.apk  --device model=flame,version=30
+        run: gcloud firebase test android run  --type instrumentation  --app app-debug.apk  --test app-debug-androidTest.apk  --device model=redfin,version=30
 
   deploy_test:
     runs-on: ubuntu-latest
