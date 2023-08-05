@@ -108,6 +108,9 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
+      - name: List available devices
+        run: gcloud firebase test android models list
+
       - name: Execute Instrumentation Tests on  Firebase Test Lab
         run: gcloud firebase test android run  --type instrumentation  --app app-debug.apk  --test app-debug-androidTest.apk  --device model=flame,version=30
 
