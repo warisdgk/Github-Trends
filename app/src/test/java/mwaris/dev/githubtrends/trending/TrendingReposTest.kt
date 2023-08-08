@@ -20,4 +20,23 @@ class TrendingReposTest {
             viewModel.trendingReposState.value
         )
     }
+
+    @Test
+    fun trendingReposAvailable(){
+        val viewModel = TrendingReposViewModel()
+
+        viewModel.getTrendingRepos()
+
+        assertEquals(
+            TrendingRepoState.GithubRepositories(
+                listOf(Repositories("",
+                    "go",
+                    "golang/go",
+                    "https://avatars.githubusercontent.com/u/4314092?v=4",
+                    "The Go programming language"))
+            ),
+            viewModel.trendingReposState.value
+        )
+    }
+
 }
