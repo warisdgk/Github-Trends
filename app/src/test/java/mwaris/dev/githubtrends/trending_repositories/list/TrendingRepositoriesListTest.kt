@@ -3,6 +3,7 @@ package mwaris.dev.githubtrends.trending_repositories.list
 
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.data.entities.Repository
+import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trending_repositories.list.TrendingRepositoriesListingState
 import mwaris.dev.githubtrends.ui.trending_repositories.list.TrendingRepositoriesListingViewModel
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,10 +15,11 @@ class TrendingRepositoriesListTest {
 
     @Test
     fun noTrendingRepositoriesAvailable() {
-        val viewModel = TrendingRepositoriesListingViewModel()
+        val trendingListRepository = TrendingListRepository()
+        val viewModel = TrendingRepositoriesListingViewModel(trendingListRepository)
 
-        viewModel.signalEmptyData(true)
-        viewModel.getTrendingGithubRepos()
+        trendingListRepository.signalEmptyData(true)
+        viewModel.getTrendingGithubRepositoriesList()
 
         assertEquals(
             TrendingRepositoriesListingState.GithubRepositories(emptyList()),
@@ -38,10 +40,11 @@ class TrendingRepositoriesListTest {
             )
         )
 
-        val viewModel = TrendingRepositoriesListingViewModel()
+        val trendingListRepository = TrendingListRepository()
+        val viewModel = TrendingRepositoriesListingViewModel(trendingListRepository)
 
-        viewModel.signalEmptyData(false)
-        viewModel.getTrendingGithubRepos()
+        trendingListRepository.signalEmptyData(false)
+        viewModel.getTrendingGithubRepositoriesList()
 
         assertEquals(
             TrendingRepositoriesListingState.GithubRepositories(listOfTrendingRepositories),
