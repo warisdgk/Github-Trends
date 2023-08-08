@@ -13,7 +13,7 @@ class TrendingReposTest {
     fun noTrendingReposAvailable() {
         val viewModel = TrendingReposViewModel()
 
-        viewModel.getTrendingRepos()
+        viewModel.getTrendingRepos(true)
 
         assertEquals(
             TrendingRepoState.GithubRepositories(emptyList()),
@@ -25,11 +25,11 @@ class TrendingReposTest {
     fun trendingReposAvailable(){
         val viewModel = TrendingReposViewModel()
 
-        viewModel.getTrendingRepos()
+        viewModel.getTrendingRepos(false)
 
         assertEquals(
             TrendingRepoState.GithubRepositories(
-                listOf(Repositories("",
+                listOf(Repositories("23096959",
                     "go",
                     "golang/go",
                     "https://avatars.githubusercontent.com/u/4314092?v=4",
