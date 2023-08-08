@@ -1,12 +1,13 @@
-package mwaris.dev.githubtrends.trending
+package mwaris.dev.githubtrends.ui.trending_repositories.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import mwaris.dev.githubtrends.data.entities.Repository
 
-class TrendingReposViewModel {
+class TrendingRepositoriesListingViewModel {
 
-    private val mutableTrendingReposState = MutableLiveData<TrendingRepoState>()
-    val trendingReposState: LiveData<TrendingRepoState> = mutableTrendingReposState
+    private val mutableTrendingReposState = MutableLiveData<TrendingRepositoriesListingState>()
+    val trendingReposState: LiveData<TrendingRepositoriesListingState> = mutableTrendingReposState
 
     private var signalEmptyData: Boolean = false
 
@@ -15,7 +16,7 @@ class TrendingReposViewModel {
         mutableTrendingReposState.value = repositoryState
     }
 
-    private fun getGithubRepositories(): TrendingRepoState.GithubRepositories {
+    private fun getGithubRepositories(): TrendingRepositoriesListingState.GithubRepositories {
         val listOfTrendingRepos = listOf(
             Repository(
                 "23096959",
@@ -27,9 +28,9 @@ class TrendingReposViewModel {
         )
 
         val repositoryState = if (signalEmptyData) {
-            TrendingRepoState.GithubRepositories(emptyList())
+            TrendingRepositoriesListingState.GithubRepositories(emptyList())
         } else {
-            TrendingRepoState.GithubRepositories(listOfTrendingRepos)
+            TrendingRepositoriesListingState.GithubRepositories(listOfTrendingRepos)
         }
         return repositoryState
     }

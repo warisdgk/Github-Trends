@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.trending
+package mwaris.dev.githubtrends.data.entities
 
 data class Repository(
     val id: String,
