@@ -3,11 +3,11 @@ package mwaris.dev.githubtrends.data.repositories
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.trending_repositories.list.TrendingRepositoriesListingState
 
-class TrendingListRepository {
+class TrendingListRepository : ITrendingListRepository {
 
     private var signalEmptyData: Boolean = false
 
-    fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState.GithubRepositories {
+    override fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState.GithubRepositories {
         val listOfTrendingRepos = listOf(
             Repository(
                 "23096959",

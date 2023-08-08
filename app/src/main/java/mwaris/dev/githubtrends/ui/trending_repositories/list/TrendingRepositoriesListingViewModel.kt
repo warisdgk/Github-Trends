@@ -2,17 +2,18 @@ package mwaris.dev.githubtrends.ui.trending_repositories.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 
 class TrendingRepositoriesListingViewModel(
-    private val trendingListRepository: TrendingListRepository
+    private val trendingListRepository: ITrendingListRepository
 ) {
 
-    private val mutableTrendingReposState = MutableLiveData<TrendingRepositoriesListingState>()
-    val trendingReposState: LiveData<TrendingRepositoriesListingState> = mutableTrendingReposState
+    private val mutableTrendingReposListingState = MutableLiveData<TrendingRepositoriesListingState>()
+    val trendingReposListingState: LiveData<TrendingRepositoriesListingState> = mutableTrendingReposListingState
 
     fun getTrendingGithubRepositoriesList() {
         val repositoryState = trendingListRepository.getTrendingGithubRepositoriesList()
-        mutableTrendingReposState.value = repositoryState
+        mutableTrendingReposListingState.value = repositoryState
     }
 }

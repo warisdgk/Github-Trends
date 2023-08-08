@@ -23,7 +23,7 @@ class TrendingRepositoriesListTest {
 
         assertEquals(
             TrendingRepositoriesListingState.GithubRepositories(emptyList()),
-            viewModel.trendingReposState.value
+            viewModel.trendingReposListingState.value
         )
     }
 
@@ -48,7 +48,7 @@ class TrendingRepositoriesListTest {
 
         assertEquals(
             TrendingRepositoriesListingState.GithubRepositories(listOfTrendingRepositories),
-            viewModel.trendingReposState.value
+            viewModel.trendingReposListingState.value
         )
     }
 
