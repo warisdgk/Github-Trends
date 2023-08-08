@@ -130,8 +130,9 @@ jobs:
       - name: List available devices
         run: gcloud firebase test android models list
 
-      - name: Execute Instrumentation Tests on  Firebase Test Lab
-        run: gcloud firebase test android run  --type instrumentation  --app app-debug.apk  --test app-debug-androidTest.apk  --device model=redfin,version=30
+# Commenting this step to avoid Firebase Test Lab daily quota limits
+#      - name: Execute Instrumentation Tests on  Firebase Test Lab
+#        run: gcloud firebase test android run  --type instrumentation  --app app-debug.apk  --test app-debug-androidTest.apk  --device model=redfin,version=30
   bump_version:
     name: Bump Version for Deployment
     needs: [run_micro_tests, run_ui_tests_on_firebase_test_lab]
