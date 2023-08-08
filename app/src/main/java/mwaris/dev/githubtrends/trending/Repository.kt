@@ -1,6 +1,6 @@
 package mwaris.dev.githubtrends.trending
 
-data class Repositories(
+data class Repository(
     val id: String,
     val name: String,
     val fullName: String,
