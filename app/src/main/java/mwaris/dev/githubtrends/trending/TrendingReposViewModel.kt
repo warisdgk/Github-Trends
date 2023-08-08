@@ -10,5 +10,6 @@ class TrendingReposViewModel {
 
 
     fun getTrendingRepos() {
+        mutableTrendingReposState.value = TrendingRepoState.GithubRepositories(emptyList())
     }
 }
