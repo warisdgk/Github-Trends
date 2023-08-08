@@ -14,7 +14,7 @@ class TrendingReposTest {
         val viewModel = TrendingReposViewModel()
 
         viewModel.signalEmptyData(true)
-        viewModel.getTrendingRepos()
+        viewModel.getTrendingGithubRepos()
 
         assertEquals(
             TrendingRepoState.GithubRepositories(emptyList()),
@@ -38,7 +38,7 @@ class TrendingReposTest {
         val viewModel = TrendingReposViewModel()
 
         viewModel.signalEmptyData(false)
-        viewModel.getTrendingRepos()
+        viewModel.getTrendingGithubRepos()
 
         assertEquals(
             TrendingRepoState.GithubRepositories(listOfTrendingRepositories),

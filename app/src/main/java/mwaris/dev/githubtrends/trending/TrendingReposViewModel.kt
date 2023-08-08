@@ -10,7 +10,12 @@ class TrendingReposViewModel {
 
     private var signalEmptyData: Boolean = false
 
-    fun getTrendingRepos() {
+    fun getTrendingGithubRepos() {
+        val repositoryState = getGithubRepositories()
+        mutableTrendingReposState.value = repositoryState
+    }
+
+    private fun getGithubRepositories(): TrendingRepoState.GithubRepositories {
         val listOfTrendingRepos = listOf(
             Repository(
                 "23096959",
@@ -21,13 +26,12 @@ class TrendingReposViewModel {
             )
         )
 
-        if (signalEmptyData) {
-            mutableTrendingReposState.value = TrendingRepoState.GithubRepositories(emptyList())
+        val repositoryState = if (signalEmptyData) {
+            TrendingRepoState.GithubRepositories(emptyList())
         } else {
-            mutableTrendingReposState.value = TrendingRepoState.GithubRepositories(
-                listOfTrendingRepos
-            )
+            TrendingRepoState.GithubRepositories(listOfTrendingRepos)
         }
+        return repositoryState
     }
 
     fun signalEmptyData(updatedValue: Boolean) {
