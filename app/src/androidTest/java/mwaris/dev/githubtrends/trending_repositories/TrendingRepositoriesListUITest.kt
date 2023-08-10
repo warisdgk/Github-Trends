@@ -35,4 +35,17 @@ class TrendingRepositoriesListUITest {
             .onNodeWithText("An alien is probably blocking your signal.")
             .assertExists()
     }
+
+    @Test
+    fun showsEmptyTrendingRepositoriesList(){
+        composeTestRule.setContent {
+            GithubTrendsTheme {
+                APIUnreachable("Something went wrong")
+            }
+        }
+
+        composeTestRule
+            .onNodeWithTag("trending-repositories-list")
+            .assertExists()
+    }
 }
