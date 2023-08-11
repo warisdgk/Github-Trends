@@ -14,17 +14,18 @@ class TrendingRepositoriesLoadingStateTest {
     @Test
     fun trendingRepositoriesStatesValidation() {
 
-        val renderedStates = mutableListOf<TrendingRepositoriesListingState>()
-
         val trendingListRepository = TrendingListRepository()
         val viewModel = TrendingRepositoriesListingViewModel(trendingListRepository)
 
         trendingListRepository.signalEmptyData(true)
-        viewModel.getTrendingGithubRepositoriesList()
 
-        viewModel.trendingReposListingState.observeForever{
+        val renderedStates = mutableListOf<TrendingRepositoriesListingState>()
+
+        viewModel.trendingReposListingState.observeForever {
             renderedStates.add(it)
         }
+
+        viewModel.getTrendingGithubRepositoriesList()
 
         assertEquals(
             listOf(
