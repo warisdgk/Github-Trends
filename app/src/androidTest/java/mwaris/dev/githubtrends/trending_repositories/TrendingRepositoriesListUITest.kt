@@ -43,7 +43,7 @@ class TrendingRepositoriesListUITest {
     }
 
     @Test
-    fun showsEmptyTrendingRepositoriesList(){
+    fun showsTrendingRepositoriesList(){
         composeTestRule.setContent {
             GithubTrendsTheme {
                 Surface(
