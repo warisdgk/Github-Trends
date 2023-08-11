@@ -14,8 +14,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import mwaris.dev.githubtrends.APIUnreachable
-import mwaris.dev.githubtrends.LoadingShimmerEffect
+import mwaris.dev.githubtrends.ui.composables.APIUnreachable
+import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import org.junit.Rule
 import org.junit.Test
