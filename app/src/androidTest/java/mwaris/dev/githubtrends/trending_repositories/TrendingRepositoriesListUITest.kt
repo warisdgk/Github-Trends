@@ -12,6 +12,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import mwaris.dev.githubtrends.APIUnreachable
+import mwaris.dev.githubtrends.ShimmerLoadingItem
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import org.junit.Rule
 import org.junit.Test
@@ -70,21 +71,7 @@ class TrendingRepositoriesListUITest {
     @Test
     fun showsShimmerEffectInCaseOfLoadingData(){
         composeTestRule.setContent {
-            GithubTrendsTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LazyColumn(
-                        modifier = Modifier.testTag("trending-repositories-list")
-                    ) {
-                        items(count = 15) {
-                            Text(text = "Trending Repo")
-                        }
-                    }
-                    APIUnreachable("Something went wrong")
-                }
-            }
+            ShimmerLoadingItem()
         }
 
         composeTestRule

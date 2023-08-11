@@ -90,6 +90,17 @@ private fun TrendingRepositoryItem() {
 }
 
 @Composable
+fun ShimmerLoadingItem() {
+    Row(
+        modifier = Modifier
+            .padding(all = 15.dp)
+            .fillMaxWidth()
+            .testTag("shimmer-loading-effect"), verticalAlignment = Alignment.Top
+    ) {
+    }
+}
+
+@Composable
 fun APIUnreachable(name: String, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
@@ -148,5 +159,13 @@ fun TrendingRepositoriesListPreview() {
                 TrendingRepositoryItem()
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ShimmerLoadingItemPreview() {
+    GithubTrendsTheme {
+        ShimmerLoadingItem()
     }
 }
