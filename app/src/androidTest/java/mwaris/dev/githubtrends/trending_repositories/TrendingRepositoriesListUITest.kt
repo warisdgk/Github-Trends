@@ -66,4 +66,29 @@ class TrendingRepositoriesListUITest {
             .onNodeWithTag("trending-repositories-list")
             .assertExists()
     }
+
+    @Test
+    fun showsShimmerEffectInCaseOfLoadingData(){
+        composeTestRule.setContent {
+            GithubTrendsTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    LazyColumn(
+                        modifier = Modifier.testTag("trending-repositories-list")
+                    ) {
+                        items(count = 15) {
+                            Text(text = "Trending Repo")
+                        }
+                    }
+                    APIUnreachable("Something went wrong")
+                }
+            }
+        }
+
+        composeTestRule
+            .onNodeWithTag("shimmer-loading-effect")
+            .assertExists()
+    }
 }
