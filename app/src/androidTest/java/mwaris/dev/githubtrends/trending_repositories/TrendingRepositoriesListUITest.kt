@@ -1,6 +1,7 @@
 package mwaris.dev.githubtrends.trending_repositories
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -8,11 +9,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import mwaris.dev.githubtrends.APIUnreachable
-import mwaris.dev.githubtrends.ShimmerLoadingItem
+import mwaris.dev.githubtrends.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import org.junit.Rule
 import org.junit.Test
@@ -44,7 +47,7 @@ class TrendingRepositoriesListUITest {
     }
 
     @Test
-    fun showsTrendingRepositoriesList(){
+    fun showsTrendingRepositoriesList() {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 Surface(
@@ -69,13 +72,17 @@ class TrendingRepositoriesListUITest {
     }
 
     @Test
-    fun showsShimmerEffectInCaseOfLoadingData(){
+    fun showsShimmerEffectInCaseOfLoadingData() {
         composeTestRule.setContent {
-            ShimmerLoadingItem()
+            Column {
+                repeat(8) {
+                    LoadingShimmerEffect()
+                }
+            }
         }
 
         composeTestRule
-            .onNodeWithTag("shimmer-loading-effect")
-            .assertExists()
+            .onAllNodesWithTag("shimmer-loading-effect")
+            .assertCountEquals(8)
     }
 }
