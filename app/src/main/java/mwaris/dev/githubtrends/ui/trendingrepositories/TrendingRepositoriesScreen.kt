@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,29 +20,34 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 
 @Composable
-fun TrendingRepositoryScreen() {
+fun TrendingRepositoryScreen(trendingRepositoriesList: List<Repository>) {
     LazyColumn(
         modifier = Modifier.testTag("trending-repositories-list")
     ) {
-        items(count = 15) {
-            TrendingRepositoryItem()
+        items(trendingRepositoriesList,
+            key = {
+                it.id
+            }) { repositoryItem ->
+            TrendingRepositoryItem(repositoryItem)
         }
     }
 }
 
-
 @Composable
-private fun TrendingRepositoryItem() {
+fun TrendingRepositoryItem(
+    repositoryInfo: Repository
+) {
     Row(
         Modifier
             .padding(all = 15.dp)
             .fillMaxWidth()
     ) {
         AsyncImage(
-            model = "https://avatars.githubusercontent.com/u/4314092?v=4",
+            model = repositoryInfo.avatarUrl,
             contentDescription = "avatar",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -54,13 +60,13 @@ private fun TrendingRepositoryItem() {
                 .padding(start = 15.dp)
                 .fillMaxWidth()
         ) {
-            Text("go")
+            Text(repositoryInfo.name)
             Spacer(modifier = Modifier.size(5.dp))
             Text(
-                "golang/go"
+                repositoryInfo.fullName
             )
             Spacer(modifier = Modifier.size(10.dp))
-            Text("The Go programming language")
+            Text(repositoryInfo.description)
         }
     }
 }
@@ -68,12 +74,15 @@ private fun TrendingRepositoryItem() {
 @Preview(showBackground = true)
 @Composable
 fun TrendingRepositoriesListPreview() {
+
+    val trendingRepositoriesList: List<Repository> = emptyList()
+
     GithubTrendsTheme {
         LazyColumn(
             modifier = Modifier.testTag("trending-repositories-list")
         ) {
-            items(count = 15) {
-                TrendingRepositoryItem()
+            items(trendingRepositoriesList) { repositoryItem ->
+                TrendingRepositoryItem(repositoryItem)
             }
         }
     }
