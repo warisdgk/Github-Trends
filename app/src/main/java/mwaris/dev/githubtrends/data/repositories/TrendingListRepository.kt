@@ -8,7 +8,7 @@ class TrendingListRepository : ITrendingListRepository {
 
     private var signalEmptyData: Boolean = false
 
-    override fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState {
+    override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState {
         val listOfTrendingRepos = listOf(
             Repository(
                 "23096959",

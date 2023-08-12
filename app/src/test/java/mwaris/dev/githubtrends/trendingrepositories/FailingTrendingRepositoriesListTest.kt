@@ -1,5 +1,10 @@
 package mwaris.dev.githubtrends.trendingrepositories
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingState
@@ -12,20 +17,27 @@ import org.junit.jupiter.api.extension.ExtendWith
 class FailingTrendingRepositoriesListTest {
 
     @Test
-    fun failingBackendError() {
-        val trendingListRepository = UnavailableTrendingRepositoryListRepository()
-        val viewModel = TrendingRepositoriesListingViewModel(trendingListRepository)
+    fun failingBackendError() = runTest {
+        val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+        Dispatchers.setMain(testDispatcher)
+        try {
+            val trendingListRepository = UnavailableTrendingRepositoryListRepository()
+            val viewModel =
+                TrendingRepositoriesListingViewModel(trendingListRepository, testDispatcher)
 
-        viewModel.getTrendingGithubRepositoriesList()
+            viewModel.getTrendingGithubRepositoriesList()
 
-        Assertions.assertEquals(
-            TrendingRepositoriesListingState.BackendError,
-            viewModel.trendingReposListingState.value
-        )
+            Assertions.assertEquals(
+                TrendingRepositoriesListingState.BackendError,
+                viewModel.trendingReposListingState.value
+            )
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 
     class UnavailableTrendingRepositoryListRepository : ITrendingListRepository {
-        override fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState {
+        override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState {
             return TrendingRepositoriesListingState.BackendError
         }
 
