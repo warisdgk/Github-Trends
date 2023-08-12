@@ -1,9 +1,9 @@
-package mwaris.dev.githubtrends.trending_repositories.list
+package mwaris.dev.githubtrends.trendingrepositories
 
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
-import mwaris.dev.githubtrends.ui.trending_repositories.list.TrendingRepositoriesListingState
-import mwaris.dev.githubtrends.ui.trending_repositories.list.TrendingRepositoriesListingViewModel
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingState
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

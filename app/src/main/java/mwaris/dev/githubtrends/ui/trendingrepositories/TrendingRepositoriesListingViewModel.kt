@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.ui.trending_repositories.list
+package mwaris.dev.githubtrends.ui.trendingrepositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

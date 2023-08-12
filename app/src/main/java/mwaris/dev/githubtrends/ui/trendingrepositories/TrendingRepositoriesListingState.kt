@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.ui.trending_repositories.list
+package mwaris.dev.githubtrends.ui.trendingrepositories
 
 import mwaris.dev.githubtrends.data.entities.Repository
 

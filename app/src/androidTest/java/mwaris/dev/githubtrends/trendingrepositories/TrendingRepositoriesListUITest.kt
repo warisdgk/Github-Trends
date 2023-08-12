@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.trending_repositories
+package mwaris.dev.githubtrends.trendingrepositories
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column

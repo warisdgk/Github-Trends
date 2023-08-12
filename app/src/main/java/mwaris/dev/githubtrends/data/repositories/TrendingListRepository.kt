@@ -2,7 +2,7 @@ package mwaris.dev.githubtrends.data.repositories
 
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.data.exceptions.BackendException
-import mwaris.dev.githubtrends.ui.trending_repositories.list.TrendingRepositoriesListingState
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingState
 
 class TrendingListRepository : ITrendingListRepository {
 
