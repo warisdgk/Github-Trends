@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
 
 final def keystoreProperties = new Properties()
@@ -103,6 +105,9 @@ android {
 
 dependencies {
 
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.5.1'
@@ -130,4 +135,8 @@ dependencies {
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
 
+}
+
+kapt {
+    correctErrorTypes true
 }
