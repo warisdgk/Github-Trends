@@ -4,14 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
+import mwaris.dev.githubtrends.di.IoDispatcher
+import javax.inject.Inject
 
-class TrendingRepositoriesListingViewModel(
+@HiltViewModel
+class TrendingRepositoriesListingViewModel @Inject constructor(
     private val trendingListRepository: ITrendingListRepository,
-    private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val mutableTrendingReposListingState =
