@@ -2,13 +2,6 @@ package mwaris.dev.githubtrends.trendingrepositories
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -18,7 +11,7 @@ import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.composables.APIUnreachable
 import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
-import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoryItem
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoryScreen
 import org.junit.Rule
 import org.junit.Test
 
@@ -63,22 +56,7 @@ class TrendingRepositoriesListUITest {
 
         composeTestRule.setContent {
             GithubTrendsTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LazyColumn(
-                        modifier = Modifier.testTag("trending-repositories-list")
-                    ) {
-                        items(trendingRepositoriesList,
-                            key = {
-                                it.id
-                            }
-                        ) { repositoryItem ->
-                            TrendingRepositoryItem(repositoryItem)
-                        }
-                    }
-                }
+                TrendingRepositoryScreen(trendingRepositoriesList = trendingRepositoriesList)
             }
         }
 

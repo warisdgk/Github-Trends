@@ -75,15 +75,17 @@ fun TrendingRepositoryItem(
 @Composable
 fun TrendingRepositoriesListPreview() {
 
-    val trendingRepositoriesList: List<Repository> = emptyList()
+    val trendingRepositoriesList: List<Repository> = listOf(
+        Repository(
+            "23096959",
+            "go",
+            "golang/go",
+            "https://avatars.githubusercontent.com/u/4314092?v=4",
+            "The Go programming language"
+        )
+    )
 
     GithubTrendsTheme {
-        LazyColumn(
-            modifier = Modifier.testTag("trending-repositories-list")
-        ) {
-            items(trendingRepositoriesList) { repositoryItem ->
-                TrendingRepositoryItem(repositoryItem)
-            }
-        }
+        TrendingRepositoryScreen(trendingRepositoriesList)
     }
 }
