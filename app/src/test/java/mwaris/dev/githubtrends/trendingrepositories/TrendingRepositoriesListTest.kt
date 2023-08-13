@@ -9,8 +9,8 @@ import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
-import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingState
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -26,20 +26,22 @@ class TrendingRepositoriesListTest {
         try {
             val trendingListRepository = TrendingListRepository()
             val viewModel =
-                TrendingRepositoriesListingViewModel(trendingListRepository, testDispatcher)
+                TrendingRepositoriesListingViewModel(
+                    trendingListRepository,
+                    testDispatcher
+                )
 
             trendingListRepository.signalEmptyData(true)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(
-                TrendingRepositoriesListingState.GithubRepositories(emptyList()),
+                TrendingRepositoriesScreenState(),
                 viewModel.trendingReposListingState.value
             )
         } finally {
             Dispatchers.resetMain()
         }
     }
-
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
@@ -59,13 +61,16 @@ class TrendingRepositoriesListTest {
 
             val trendingListRepository = TrendingListRepository()
             val viewModel =
-                TrendingRepositoriesListingViewModel(trendingListRepository, testDispatcher)
+                TrendingRepositoriesListingViewModel(
+                    trendingListRepository,
+                    testDispatcher
+                )
 
             trendingListRepository.signalEmptyData(false)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(
-                TrendingRepositoriesListingState.GithubRepositories(listOfTrendingRepositories),
+                TrendingRepositoriesScreenState(listOfRepositories = listOfTrendingRepositories),
                 viewModel.trendingReposListingState.value
             )
         } finally {

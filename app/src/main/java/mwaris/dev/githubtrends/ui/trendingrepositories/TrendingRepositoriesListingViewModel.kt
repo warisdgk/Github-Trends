@@ -19,14 +19,15 @@ class TrendingRepositoriesListingViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val mutableTrendingReposListingState =
-        MutableLiveData<TrendingRepositoriesListingState>()
-    val trendingReposListingState: LiveData<TrendingRepositoriesListingState> =
+        MutableLiveData<TrendingRepositoriesScreenState>()
+    val trendingReposListingState: LiveData<TrendingRepositoriesScreenState> =
         mutableTrendingReposListingState
 
     fun getTrendingGithubRepositoriesList() {
         viewModelScope.launch {
             withContext(dispatcher) {
-                mutableTrendingReposListingState.value = TrendingRepositoriesListingState.Loading
+                mutableTrendingReposListingState.value =
+                    TrendingRepositoriesScreenState(isLoading = true)
 
                 val repositoryState = trendingListRepository.getTrendingGithubRepositoriesList()
                 mutableTrendingReposListingState.value = repositoryState

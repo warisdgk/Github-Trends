@@ -1,14 +1,15 @@
 package mwaris.dev.githubtrends.data.repositories
 
+import mwaris.dev.githubtrends.R
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.data.exceptions.BackendException
-import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingState
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
 
 class TrendingListRepository : ITrendingListRepository {
 
     private var signalEmptyData: Boolean = false
 
-    override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesListingState {
+    override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesScreenState {
         val listOfTrendingRepos = listOf(
             Repository(
                 "23096959",
@@ -21,12 +22,12 @@ class TrendingListRepository : ITrendingListRepository {
 
         val repositoryState = try {
             if (signalEmptyData) {
-                TrendingRepositoriesListingState.GithubRepositories(emptyList())
+                TrendingRepositoriesScreenState(listOfRepositories = emptyList())
             } else {
-                TrendingRepositoriesListingState.GithubRepositories(listOfTrendingRepos)
+                TrendingRepositoriesScreenState(listOfRepositories = listOfTrendingRepos)
             }
         } catch (exception: BackendException) {
-            TrendingRepositoriesListingState.BackendError
+            TrendingRepositoriesScreenState(error= R.string.error_trending_repos_fetching)
         }
         return repositoryState
     }
