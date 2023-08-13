@@ -1,5 +1,6 @@
 package mwaris.dev.githubtrends.trendingrepositories
 
+import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -25,9 +26,11 @@ class TrendingRepositoriesListTest {
         Dispatchers.setMain(testDispatcher)
         try {
             val trendingListRepository = TrendingListRepository()
+            val savedStateHandle = SavedStateHandle()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
+                    savedStateHandle,
                     testDispatcher
                 )
 
@@ -36,7 +39,7 @@ class TrendingRepositoriesListTest {
 
             assertEquals(
                 TrendingRepositoriesScreenState(),
-                viewModel.trendingReposListingState.value
+                viewModel.dataState.value
             )
         } finally {
             Dispatchers.resetMain()
@@ -60,9 +63,11 @@ class TrendingRepositoriesListTest {
             )
 
             val trendingListRepository = TrendingListRepository()
+            val savedStateHandle = SavedStateHandle()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
+                    savedStateHandle,
                     testDispatcher
                 )
 
@@ -71,7 +76,7 @@ class TrendingRepositoriesListTest {
 
             assertEquals(
                 TrendingRepositoriesScreenState(listOfRepositories = listOfTrendingRepositories),
-                viewModel.trendingReposListingState.value
+                viewModel.dataState.value
             )
         } finally {
             Dispatchers.resetMain()

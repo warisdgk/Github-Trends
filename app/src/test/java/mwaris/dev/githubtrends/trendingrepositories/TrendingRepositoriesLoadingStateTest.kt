@@ -1,5 +1,6 @@
 package mwaris.dev.githubtrends.trendingrepositories
 
+import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -24,9 +25,11 @@ class TrendingRepositoriesLoadingStateTest {
         Dispatchers.setMain(testDispatcher)
         try {
             val trendingListRepository = TrendingListRepository()
+            val savedStateHandle =  SavedStateHandle()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
+                    savedStateHandle,
                     testDispatcher
                 )
 
@@ -34,7 +37,7 @@ class TrendingRepositoriesLoadingStateTest {
 
             val renderedStates = mutableListOf<TrendingRepositoriesScreenState>()
 
-            viewModel.trendingReposListingState.observeForever {
+            viewModel.dataState.observeForever {
                 renderedStates.add(it)
             }
 
@@ -42,6 +45,7 @@ class TrendingRepositoriesLoadingStateTest {
 
             assertEquals(
                 listOf(
+                    TrendingRepositoriesScreenState(),
                     TrendingRepositoriesScreenState(isLoading = true),
                     TrendingRepositoriesScreenState(listOfRepositories = emptyList()),
                 ), renderedStates

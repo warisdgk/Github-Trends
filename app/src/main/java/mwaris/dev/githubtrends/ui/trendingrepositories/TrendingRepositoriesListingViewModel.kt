@@ -1,13 +1,12 @@
 package mwaris.dev.githubtrends.ui.trendingrepositories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mwaris.dev.githubtrends.base.BaseStateViewModel
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.di.IoDispatcher
 import javax.inject.Inject
@@ -15,22 +14,28 @@ import javax.inject.Inject
 @HiltViewModel
 class TrendingRepositoriesListingViewModel @Inject constructor(
     private val trendingListRepository: ITrendingListRepository,
+    savedStateHandle: SavedStateHandle,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
-) : ViewModel() {
-
-    private val mutableTrendingReposListingState =
-        MutableLiveData<TrendingRepositoriesScreenState>()
-    val trendingReposListingState: LiveData<TrendingRepositoriesScreenState> =
-        mutableTrendingReposListingState
+) : BaseStateViewModel<TrendingRepositoriesScreenState>(
+    savedStateHandle,
+    TrendingRepositoriesScreenState(
+        false,
+        emptyList()
+    )
+) {
 
     fun getTrendingGithubRepositoriesList() {
         viewModelScope.launch {
             withContext(dispatcher) {
-                mutableTrendingReposListingState.value =
-                    TrendingRepositoriesScreenState(isLoading = true)
+                mutableDataState.value = currentState().copy(isLoading = true)
 
                 val repositoryState = trendingListRepository.getTrendingGithubRepositoriesList()
-                mutableTrendingReposListingState.value = repositoryState
+
+                mutableDataState.value = currentState().copy(
+                    isLoading = repositoryState.isLoading,
+                    listOfRepositories = repositoryState.listOfRepositories,
+                    error = repositoryState.error
+                )
             }
         }
     }

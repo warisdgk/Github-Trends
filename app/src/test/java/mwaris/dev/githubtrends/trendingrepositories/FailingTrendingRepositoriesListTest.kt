@@ -1,5 +1,6 @@
 package mwaris.dev.githubtrends.trendingrepositories
 
+import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -23,12 +24,14 @@ class FailingTrendingRepositoriesListTest {
     @Test
     fun failingBackendError() = runTest {
         val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+        val savedStateHandle = SavedStateHandle()
         Dispatchers.setMain(testDispatcher)
         try {
             val trendingListRepository = UnavailableTrendingRepositoryListRepository()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
+                    savedStateHandle,
                     testDispatcher
                 )
 
@@ -36,7 +39,7 @@ class FailingTrendingRepositoriesListTest {
 
             Assertions.assertEquals(
                 TrendingRepositoriesScreenState(error = R.string.error_trending_repos_fetching),
-                viewModel.trendingReposListingState.value
+                viewModel.dataState.value
             )
         } finally {
             Dispatchers.resetMain()
