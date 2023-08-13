@@ -18,10 +18,7 @@ class TrendingRepositoriesListingViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : BaseStateViewModel<TrendingRepositoriesScreenState>(
     savedStateHandle,
-    TrendingRepositoriesScreenState(
-        false,
-        emptyList()
-    )
+    TrendingRepositoriesScreenState()
 ) {
 
     fun getTrendingGithubRepositoriesList() {

@@ -11,6 +11,7 @@ import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.composables.APIUnreachable
 import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoryScreen
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +57,12 @@ class TrendingRepositoriesListUITest {
 
         composeTestRule.setContent {
             GithubTrendsTheme {
-                TrendingRepositoryScreen(trendingRepositoriesList = trendingRepositoriesList)
+                TrendingRepositoryScreen(
+                    false,
+                    TrendingRepositoriesScreenState(
+                        listOfRepositories = trendingRepositoriesList
+                    )
+                )
             }
         }
 

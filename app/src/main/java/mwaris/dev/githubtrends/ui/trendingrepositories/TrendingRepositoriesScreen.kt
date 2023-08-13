@@ -24,11 +24,14 @@ import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 
 @Composable
-fun TrendingRepositoryScreen(trendingRepositoriesList: List<Repository>) {
+fun TrendingRepositoryScreen(
+    isLoading: Boolean,
+    trendingRepositoriesScreenState: TrendingRepositoriesScreenState
+) {
     LazyColumn(
         modifier = Modifier.testTag("trending-repositories-list")
     ) {
-        items(trendingRepositoriesList,
+        items(trendingRepositoriesScreenState.listOfRepositories,
             key = {
                 it.id
             }) { repositoryItem ->
@@ -86,6 +89,11 @@ fun TrendingRepositoriesListPreview() {
     )
 
     GithubTrendsTheme {
-        TrendingRepositoryScreen(trendingRepositoriesList)
+        TrendingRepositoryScreen(
+            false,
+            TrendingRepositoriesScreenState(
+                listOfRepositories = trendingRepositoriesList
+            )
+        )
     }
 }
