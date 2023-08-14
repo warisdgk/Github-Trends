@@ -1,11 +1,23 @@
 package mwaris.dev.githubtrends.trendingrepositories
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import mwaris.dev.githubtrends.R
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingScreen
@@ -107,23 +119,44 @@ class TrendingRepositoriesListUITest {
             .assertCountEquals(8)
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Test
-    fun showsTopBarWithTextTrending(){
+    fun showsTopBarWithTextTrending() {
         composeTestRule.setContent {
             GithubTrendsTheme {
-                TrendingRepositoriesListingScreen(
-                    onRetry = {},
-                    isOffline = false,
-                    isLoading = true,
-                    trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
-                        listOfRepositories = emptyList()
-                    )
-                )
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            modifier = Modifier.testTag("top-app-bar"),
+                            title = {
+                                Text(
+                                    stringResource(R.string.title_trending)
+                                )
+                            })
+                    }
+                ) { contentPadding ->
+                    Surface(
+                        modifier = Modifier
+                            .padding(contentPadding)
+                            .fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        TrendingRepositoriesListingScreen(
+                            onRetry = {},
+                            isOffline = false,
+                            isLoading = true,
+                            trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
+                                listOfRepositories = emptyList()
+                            )
+                        )
+                    }
+                }
             }
         }
 
         composeTestRule
-            .onNodeWithTag("Top-App-Bar")
+            .onNodeWithTag("top-app-bar")
             .assertExists()
 
         composeTestRule

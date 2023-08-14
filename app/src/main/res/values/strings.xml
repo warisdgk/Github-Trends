@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Github Trends</string>
 
+    <string name="title_trending">Trending</string>
     <string name="retry">RETRY</string>
 
     <string name="error_trending_repos_fetching">Error occurred while fetching trending repositories</string>
