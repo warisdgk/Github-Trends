@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     TrendingRepositoriesListingScreen(
                         // TODO: Need to refactor is online logic
                         isOnline = true,
+                        onRetry = { viewModel.getTrendingGithubRepositoriesList() },
                         isLoading = trendingListScreenState.value?.isLoading ?: false,
                         trendingRepositoriesScreenState = trendingListScreenState.value
                             ?: TrendingRepositoriesScreenState()

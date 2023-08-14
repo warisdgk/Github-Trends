@@ -28,11 +28,12 @@ import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 @Composable
 fun TrendingRepositoriesListingScreen(
     isOnline: Boolean,
+    onRetry: () -> Unit,
     isLoading: Boolean,
     trendingRepositoriesScreenState: TrendingRepositoriesScreenState
 ) {
     if (!isOnline) {
-        APIUnreachable({})
+        APIUnreachable(onRetry)
     } else {
         if (isLoading) {
             Column {
@@ -106,6 +107,7 @@ fun TrendingRepositoriesListPreview() {
     GithubTrendsTheme {
         TrendingRepositoriesListingScreen(
             isOnline = true,
+            onRetry = {},
             isLoading = false,
             trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                 listOfRepositories = trendingRepositoriesList
@@ -121,6 +123,7 @@ fun TrendingRepositoriesLoadingPreview() {
     GithubTrendsTheme {
         TrendingRepositoriesListingScreen(
             isOnline = true,
+            onRetry = {},
             isLoading = true,
             trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                 listOfRepositories = emptyList()

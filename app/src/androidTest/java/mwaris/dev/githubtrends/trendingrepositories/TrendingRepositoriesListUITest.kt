@@ -24,6 +24,7 @@ class TrendingRepositoriesListUITest {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
+                    onRetry = {},
                     isOnline = false,
                     isLoading = false,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState()
@@ -60,6 +61,7 @@ class TrendingRepositoriesListUITest {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
+                    onRetry = {},
                     isOnline = true,
                     isLoading = false,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
@@ -90,6 +92,7 @@ class TrendingRepositoriesListUITest {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
+                    onRetry = {},
                     isOnline = true,
                     isLoading = true,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
