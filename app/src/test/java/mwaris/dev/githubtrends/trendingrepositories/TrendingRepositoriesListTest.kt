@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
+import mwaris.dev.githubtrends.base.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
@@ -22,16 +23,18 @@ class TrendingRepositoriesListTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun noTrendingRepositoriesAvailable() = runTest {
-        val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+        val testDispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(testDispatcher)
         try {
             val trendingListRepository = TrendingListRepository()
             val savedStateHandle = SavedStateHandle()
+            val testNetworkMonitor = TestNetworkMonitor()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
                     savedStateHandle,
-                    testDispatcher
+                    testDispatcher,
+                    testNetworkMonitor
                 )
 
             trendingListRepository.signalEmptyData(true)
@@ -49,7 +52,7 @@ class TrendingRepositoriesListTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun someTrendingRepositoriesAvailable() = runTest {
-        val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+        val testDispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(testDispatcher)
         try {
             val listOfTrendingRepositories = listOf(
@@ -84,12 +87,14 @@ class TrendingRepositoriesListTest {
             )
 
             val trendingListRepository = TrendingListRepository()
+            val testNetworkMonitor = TestNetworkMonitor()
             val savedStateHandle = SavedStateHandle()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
                     savedStateHandle,
-                    testDispatcher
+                    testDispatcher,
+                    testNetworkMonitor
                 )
 
             trendingListRepository.signalEmptyData(false)

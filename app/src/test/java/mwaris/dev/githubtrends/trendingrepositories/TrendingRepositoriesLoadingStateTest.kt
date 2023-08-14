@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
+import mwaris.dev.githubtrends.base.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
@@ -25,12 +26,14 @@ class TrendingRepositoriesLoadingStateTest {
         Dispatchers.setMain(testDispatcher)
         try {
             val trendingListRepository = TrendingListRepository()
+            val testNetworkMonitor = TestNetworkMonitor()
             val savedStateHandle =  SavedStateHandle()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
                     savedStateHandle,
-                    testDispatcher
+                    testDispatcher,
+                    testNetworkMonitor
                 )
 
             trendingListRepository.signalEmptyData(true)
