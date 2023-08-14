@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,10 +32,10 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     val trendingListScreenState = viewModel.dataState.observeAsState()
+                    val isOffline = viewModel.isOffline.collectAsState()
 
                     TrendingRepositoriesListingScreen(
-                        // TODO: Need to refactor is online logic
-                        isOnline = true,
+                        isOffline = isOffline.value,
                         onRetry = { viewModel.getTrendingGithubRepositoriesList() },
                         isLoading = trendingListScreenState.value?.isLoading ?: false,
                         trendingRepositoriesScreenState = trendingListScreenState.value

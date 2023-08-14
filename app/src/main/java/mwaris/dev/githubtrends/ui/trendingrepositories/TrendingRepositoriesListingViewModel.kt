@@ -5,8 +5,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mwaris.dev.githubtrends.base.BaseStateViewModel
+import mwaris.dev.githubtrends.base.NetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.di.IoDispatcher
 import javax.inject.Inject
@@ -15,11 +19,20 @@ import javax.inject.Inject
 class TrendingRepositoriesListingViewModel @Inject constructor(
     private val trendingListRepository: ITrendingListRepository,
     savedStateHandle: SavedStateHandle,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    networkMonitor: NetworkMonitor
 ) : BaseStateViewModel<TrendingRepositoriesScreenState>(
     savedStateHandle,
     TrendingRepositoriesScreenState()
 ) {
+
+    val isOffline = networkMonitor.isOnline
+        .map(Boolean::not)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     fun getTrendingGithubRepositoriesList() {
         viewModelScope.launch {
