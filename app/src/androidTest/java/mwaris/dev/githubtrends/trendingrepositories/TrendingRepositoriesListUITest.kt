@@ -1,14 +1,12 @@
 package mwaris.dev.githubtrends.trendingrepositories
 
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import mwaris.dev.githubtrends.data.entities.Repository
-import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingScreen
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
@@ -26,8 +24,9 @@ class TrendingRepositoriesListUITest {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
-                    false,
-                    TrendingRepositoriesScreenState()
+                    isOnline = false,
+                    isLoading = false,
+                    trendingRepositoriesScreenState = TrendingRepositoriesScreenState()
                 )
             }
         }
@@ -61,8 +60,9 @@ class TrendingRepositoriesListUITest {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
-                    false,
-                    TrendingRepositoriesScreenState(
+                    isOnline = true,
+                    isLoading = false,
+                    trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                         listOfRepositories = trendingRepositoriesList
                     )
                 )
@@ -90,8 +90,9 @@ class TrendingRepositoriesListUITest {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
-                    true,
-                    TrendingRepositoriesScreenState(
+                    isOnline = true,
+                    isLoading = true,
+                    trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                         listOfRepositories = trendingRepositoriesList
                     )
                 )

@@ -33,6 +33,8 @@ class MainActivity : ComponentActivity() {
                     val trendingListScreenState = viewModel.dataState.observeAsState()
 
                     TrendingRepositoriesListingScreen(
+                        // TODO: Need to refactor is online logic
+                        isOnline = true,
                         isLoading = trendingListScreenState.value?.isLoading ?: false,
                         trendingRepositoriesScreenState = trendingListScreenState.value
                             ?: TrendingRepositoriesScreenState()

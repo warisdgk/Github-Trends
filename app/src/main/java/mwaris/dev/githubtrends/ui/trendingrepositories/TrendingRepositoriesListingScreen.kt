@@ -21,29 +21,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import mwaris.dev.githubtrends.data.entities.Repository
+import mwaris.dev.githubtrends.ui.composables.APIUnreachable
 import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 
 @Composable
 fun TrendingRepositoriesListingScreen(
+    isOnline: Boolean,
     isLoading: Boolean,
     trendingRepositoriesScreenState: TrendingRepositoriesScreenState
 ) {
-    if (isLoading) {
-        Column {
-            repeat(8) {
-                LoadingShimmerEffect()
-            }
-        }
+    if (!isOnline) {
+        APIUnreachable({})
     } else {
-        LazyColumn(
-            modifier = Modifier.testTag("trending-repositories-list")
-        ) {
-            items(trendingRepositoriesScreenState.listOfRepositories,
-                key = {
-                    it.id
-                }) { repositoryItem ->
-                TrendingRepositoryItem(repositoryItem)
+        if (isLoading) {
+            Column {
+                repeat(8) {
+                    LoadingShimmerEffect()
+                }
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.testTag("trending-repositories-list")
+            ) {
+                items(trendingRepositoriesScreenState.listOfRepositories,
+                    key = {
+                        it.id
+                    }) { repositoryItem ->
+                    TrendingRepositoryItem(repositoryItem)
+                }
             }
         }
     }
@@ -99,8 +105,9 @@ fun TrendingRepositoriesListPreview() {
 
     GithubTrendsTheme {
         TrendingRepositoriesListingScreen(
-            false,
-            TrendingRepositoriesScreenState(
+            isOnline = true,
+            isLoading = false,
+            trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                 listOfRepositories = trendingRepositoriesList
             )
         )
@@ -113,8 +120,9 @@ fun TrendingRepositoriesLoadingPreview() {
 
     GithubTrendsTheme {
         TrendingRepositoriesListingScreen(
-            true,
-            TrendingRepositoriesScreenState(
+            isOnline = true,
+            isLoading = true,
+            trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                 listOfRepositories = emptyList()
             )
         )
