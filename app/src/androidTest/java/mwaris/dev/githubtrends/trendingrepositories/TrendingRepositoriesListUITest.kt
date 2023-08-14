@@ -25,7 +25,7 @@ class TrendingRepositoriesListUITest {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
                     onRetry = {},
-                    isOnline = false,
+                    isOffline = true,
                     isLoading = false,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState()
                 )
@@ -62,7 +62,7 @@ class TrendingRepositoriesListUITest {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
                     onRetry = {},
-                    isOnline = true,
+                    isOffline = false,
                     isLoading = false,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                         listOfRepositories = trendingRepositoriesList
@@ -93,7 +93,7 @@ class TrendingRepositoriesListUITest {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
                     onRetry = {},
-                    isOnline = true,
+                    isOffline = false,
                     isLoading = true,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                         listOfRepositories = trendingRepositoriesList
