@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Github Trends</string>
 
+    <string name="retry">RETRY</string>
+
     <string name="error_trending_repos_fetching">Error occurred while fetching trending repositories</string>
+    <string name="error_something_went_wrong">Something went wrong</string>
+    <string name="error_signal_blocking">An alien is probably blocking your signal.</string>
 </resources>

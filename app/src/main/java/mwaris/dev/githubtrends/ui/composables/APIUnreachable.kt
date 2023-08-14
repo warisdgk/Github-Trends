@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +24,10 @@ import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 
 
 @Composable
-fun APIUnreachable(name: String, modifier: Modifier = Modifier) {
+fun APIUnreachable(
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier
             .padding(10.dp)
@@ -37,14 +41,14 @@ fun APIUnreachable(name: String, modifier: Modifier = Modifier) {
                 .testTag("api-unreachable-image")
         )
         Text(
-            text = name,
+            text = stringResource(id = R.string.error_something_went_wrong),
             modifier = modifier.align(Alignment.CenterHorizontally),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp
         )
         Spacer(modifier = Modifier.size(10.dp))
         Text(
-            text = "An alien is probably blocking your signal.",
+            text = stringResource(id = R.string.error_signal_blocking),
             modifier = modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.size(40.dp))
@@ -53,9 +57,9 @@ fun APIUnreachable(name: String, modifier: Modifier = Modifier) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(),
             shape = RectangleShape,
-            onClick = { /*TODO*/ }) {
+            onClick = { onRetry.invoke() }) {
             Text(
-                text = "RETRY",
+                text = stringResource(id = R.string.retry),
                 letterSpacing = 3.sp
             )
         }
@@ -66,6 +70,6 @@ fun APIUnreachable(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun APIUnreachablePreview() {
     GithubTrendsTheme {
-        APIUnreachable("Something went wrong")
+        APIUnreachable({})
     }
 }
