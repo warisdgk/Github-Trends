@@ -11,8 +11,8 @@ import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.ui.composables.APIUnreachable
 import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
-import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingScreen
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
 import org.junit.Rule
 import org.junit.Test
 
