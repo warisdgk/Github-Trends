@@ -106,4 +106,28 @@ class TrendingRepositoriesListUITest {
             .onAllNodesWithTag("shimmer-loading-effect")
             .assertCountEquals(8)
     }
+
+    @Test
+    fun showsTopBarWithTextTrending(){
+        composeTestRule.setContent {
+            GithubTrendsTheme {
+                TrendingRepositoriesListingScreen(
+                    onRetry = {},
+                    isOffline = false,
+                    isLoading = true,
+                    trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
+                        listOfRepositories = emptyList()
+                    )
+                )
+            }
+        }
+
+        composeTestRule
+            .onNodeWithTag("Top-App-Bar")
+            .assertExists()
+
+        composeTestRule
+            .onNodeWithText("Trending")
+            .assertExists()
+    }
 }
