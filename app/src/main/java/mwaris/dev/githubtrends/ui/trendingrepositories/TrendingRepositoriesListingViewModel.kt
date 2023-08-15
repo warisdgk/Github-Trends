@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mwaris.dev.githubtrends.R
 import mwaris.dev.githubtrends.base.viewmodel.BaseStateViewModel
-import mwaris.dev.githubtrends.utils.NetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.di.IoDispatcher
+import mwaris.dev.githubtrends.utils.NetworkMonitor
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,20 +53,24 @@ class TrendingRepositoriesListingViewModel @Inject constructor(
     private fun updateStateFor(trendingRepositoriesState: TrendingRepositoriesState) {
         when (trendingRepositoriesState) {
             TrendingRepositoriesState.Loading -> {
-                mutableDataState.value = currentState().copy(isLoading = true)
+                mutableDataState.postValue(currentState().copy(isLoading = true))
             }
 
             is TrendingRepositoriesState.TrendingRepositories -> {
-                mutableDataState.value = currentState().copy(
-                    isLoading = false,
-                    listOfRepositories = trendingRepositoriesState.repositories
+                mutableDataState.postValue(
+                    currentState().copy(
+                        isLoading = false,
+                        listOfRepositories = trendingRepositoriesState.repositories
+                    )
                 )
             }
 
             TrendingRepositoriesState.BackendError -> {
-                mutableDataState.value = currentState().copy(
-                    isLoading = false,
-                    error = R.string.error_trending_repos_fetching
+                mutableDataState.postValue(
+                    currentState().copy(
+                        isLoading = false,
+                        error = R.string.error_trending_repos_fetching
+                    )
                 )
             }
         }
