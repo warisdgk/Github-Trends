@@ -114,12 +114,19 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.7.2'
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
-    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation "androidx.compose.runtime:runtime-livedata"
 
     //Coil For Image Loading
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation "io.coil-kt:coil-compose:2.4.0"
+
+    // Retrofit & Okhttp
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
     //Hilt For DI
     implementation "com.google.dagger:hilt-android:2.44"
