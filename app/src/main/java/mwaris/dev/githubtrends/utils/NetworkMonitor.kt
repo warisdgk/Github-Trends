@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.base
+package mwaris.dev.githubtrends.utils
 
 import kotlinx.coroutines.flow.Flow
 

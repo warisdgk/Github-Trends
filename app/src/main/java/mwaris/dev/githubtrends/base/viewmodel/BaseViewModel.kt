@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.base
+package mwaris.dev.githubtrends.base.viewmodel
 
 import android.os.Parcelable
 import androidx.lifecycle.LiveData

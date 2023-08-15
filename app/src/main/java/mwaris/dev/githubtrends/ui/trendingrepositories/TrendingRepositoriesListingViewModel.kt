@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mwaris.dev.githubtrends.R
-import mwaris.dev.githubtrends.base.BaseStateViewModel
-import mwaris.dev.githubtrends.base.NetworkMonitor
+import mwaris.dev.githubtrends.base.viewmodel.BaseStateViewModel
+import mwaris.dev.githubtrends.utils.NetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.di.IoDispatcher
 import javax.inject.Inject
