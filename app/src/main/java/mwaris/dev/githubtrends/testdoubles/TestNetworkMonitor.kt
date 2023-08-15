@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.testing
+package mwaris.dev.githubtrends.testdoubles
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,4 +1,4 @@
-package mwaris.dev.githubtrends.testing
+package mwaris.dev.githubtrends.testdoubles
 
 import mwaris.dev.githubtrends.data.entities.Repository
 

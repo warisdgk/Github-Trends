@@ -1,10 +1,10 @@
-package mwaris.dev.githubtrends.data.remote
+package mwaris.dev.githubtrends.testdoubles
 
-import mwaris.dev.githubtrends.testing.DummyRepositoriesData
 import mwaris.dev.githubtrends.data.exceptions.BackendException
+import mwaris.dev.githubtrends.data.remote.ITrendingListDataSource
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesState
 
-class RemoteTrendingListDataSource : ITrendingListDataSource {
+class TestTrendingRepositoriesRemoteDataSource : ITrendingListDataSource {
 
     private val listOfTrendingRepos = DummyRepositoriesData.listOfTrendingRepositories
     private var signalEmptyData: Boolean = false
