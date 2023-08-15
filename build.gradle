@@ -10,4 +10,8 @@ ext {
     compileSdkVersion = 33
     minSdkVersion = 21
     targetSdkVersion = 33
+
+    junitVersion = "5.8.2"
+    lifecycleVersion = "2.6.1"
+    composeBOMVersion = "2022.10.00"
 }

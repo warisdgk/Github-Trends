@@ -106,39 +106,39 @@ android {
 
 dependencies {
 
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
-
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.5.1'
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
+    implementation platform("androidx.compose:compose-bom:$composeBOMVersion")
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    implementation 'androidx.activity:activity-compose:1.7.2'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
+    implementation("androidx.compose.runtime:runtime-livedata")
+
+    //Coil For Image Loading
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    //Hilt For DI
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
-    implementation('androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1')
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
-
-    implementation("androidx.compose.runtime:runtime-livedata")
-
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    androidTestImplementation platform("androidx.compose:compose-bom:$composeBOMVersion")
 
     testImplementation "androidx.arch.core:core-runtime:2.2.0"
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.2"
-
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
-
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 kapt {
