@@ -16,4 +16,5 @@ ext {
     composeBOMVersion = "2022.10.00"
     okhttpVersion = "4.10.0"
     retrofitVersion = "2.9.0"
+    chuckerVersion = "3.5.2"
 }

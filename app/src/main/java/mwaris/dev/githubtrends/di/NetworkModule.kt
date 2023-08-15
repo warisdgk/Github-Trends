@@ -1,6 +1,10 @@
 package mwaris.dev.githubtrends.di
 
+import android.annotation.SuppressLint
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,6 +15,7 @@ import mwaris.dev.githubtrends.utils.ConnectivityManagerNetworkMonitor
 import mwaris.dev.githubtrends.utils.NetworkMonitor
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,6 +23,10 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class TrendingRepositoriesAPIClient
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -63,6 +72,7 @@ object NetworkModule {
             .addConverterFactory(providesConverterFactory())
             .client(
                 providesOkhttpClient()
+                    .appendLogs(context)
                     .build()
             )
             .build()
@@ -70,6 +80,29 @@ object NetworkModule {
 
 }
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class TrendingRepositoriesAPIClient
+@SuppressLint("StaticFieldLeak")
+private lateinit var chuckInterceptor: ChuckerInterceptor
+
+private fun OkHttpClient.Builder.appendLogs(context: Context): OkHttpClient.Builder {
+    if (!::chuckInterceptor.isInitialized) {
+        chuckInterceptor = ChuckerInterceptor.Builder(context)
+            .collector(
+                ChuckerCollector(
+                    context,
+                    retentionPeriod = RetentionManager.Period.ONE_HOUR
+                )
+            )
+            .maxContentLength(250000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(false)
+            .build()
+    }
+    if (BuildConfig.DEBUG) {
+        addInterceptor(
+            HttpLoggingInterceptor()
+                .apply { level = HttpLoggingInterceptor.Level.BODY }
+        )
+        addInterceptor(chuckInterceptor)
+    }
+    return this
+}
