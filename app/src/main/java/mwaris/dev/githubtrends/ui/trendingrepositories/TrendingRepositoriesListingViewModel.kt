@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -27,6 +28,10 @@ class TrendingRepositoriesListingViewModel @Inject constructor(
     TrendingRepositoriesScreenState()
 ) {
 
+    private val handler = CoroutineExceptionHandler { _, _ ->
+        updateStateFor(TrendingRepositoriesState.BackendError)
+    }
+
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
@@ -36,7 +41,7 @@ class TrendingRepositoriesListingViewModel @Inject constructor(
         )
 
     fun getTrendingGithubRepositoriesList() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             updateStateFor(TrendingRepositoriesState.Loading)
             val result = async(dispatcher) {
                 trendingListRepository.getTrendingGithubRepositoriesList()
