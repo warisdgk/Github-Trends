@@ -9,5 +9,7 @@ data class Repository(
     val name: String,
     val fullName: String,
     val avatarUrl: String,
-    val description: String
+    val description: String,
+    val stargazersCount: String,
+    val language: String
 ) : Parcelable

@@ -1,5 +1,6 @@
 package mwaris.dev.githubtrends.ui.trendingrepositories
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,10 +25,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import mwaris.dev.githubtrends.R
 import mwaris.dev.githubtrends.data.entities.Repository
+import mwaris.dev.githubtrends.testdoubles.DummyRepositoriesData
 import mwaris.dev.githubtrends.ui.composables.APIUnreachable
 import mwaris.dev.githubtrends.ui.composables.LoadingShimmerEffect
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
@@ -51,10 +55,12 @@ fun TrendingRepositoriesListingScreen(
                 }
             }
         } else {
-            Box(modifier = Modifier
-                .pullRefresh(pullRefreshingState)
-                .testTag("pull-to-refresh")
-                .fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .pullRefresh(pullRefreshingState)
+                    .testTag("pull-to-refresh")
+                    .fillMaxSize()
+            ) {
                 LazyColumn(
                     modifier = Modifier.testTag("trending-repositories-list")
                 ) {
@@ -65,7 +71,11 @@ fun TrendingRepositoriesListingScreen(
                         TrendingRepositoryItem(repositoryItem)
                     }
                 }
-                PullRefreshIndicator(false, pullRefreshingState, Modifier.align(Alignment.TopCenter))
+                PullRefreshIndicator(
+                    false,
+                    pullRefreshingState,
+                    Modifier.align(Alignment.TopCenter)
+                )
             }
         }
     }
@@ -101,6 +111,32 @@ fun TrendingRepositoryItem(
             )
             Spacer(modifier = Modifier.size(10.dp))
             Text(repositoryInfo.description)
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(modifier = Modifier.fillMaxWidth()) {
+                if (repositoryInfo.language.isNotEmpty()){
+                    Image(
+                        modifier = Modifier
+                            .size(25.dp)
+                            .align(Alignment.CenterVertically),
+                        painter = painterResource(R.drawable.ic_language),
+                        contentDescription = "Language Icon"
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Text(repositoryInfo.language)
+                    Spacer(modifier = Modifier.size(15.dp))
+                }
+                if (repositoryInfo.stargazersCount.isNotEmpty()){
+                    Image(
+                        modifier = Modifier
+                            .size(25.dp)
+                            .align(Alignment.CenterVertically),
+                        painter = painterResource(R.drawable.ic_star), contentDescription = "Star Icon"
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Text(repositoryInfo.stargazersCount.toString())
+                }
+
+            }
         }
     }
 }
@@ -109,23 +145,13 @@ fun TrendingRepositoryItem(
 @Composable
 fun TrendingRepositoriesListPreview() {
 
-    val trendingRepositoriesList: List<Repository> = listOf(
-        Repository(
-            "23096959",
-            "go",
-            "golang/go",
-            "https://avatars.githubusercontent.com/u/4314092?v=4",
-            "The Go programming language"
-        )
-    )
-
     GithubTrendsTheme {
         TrendingRepositoriesListingScreen(
-            isOffline = true,
+            isOffline = false,
             onRetry = {},
             isLoading = false,
             trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
-                listOfRepositories = trendingRepositoriesList
+                listOfRepositories = DummyRepositoriesData.listOfTrendingRepositories
             )
         )
     }
@@ -137,7 +163,7 @@ fun TrendingRepositoriesLoadingPreview() {
 
     GithubTrendsTheme {
         TrendingRepositoriesListingScreen(
-            isOffline = true,
+            isOffline = false,
             onRetry = {},
             isLoading = true,
             trendingRepositoriesScreenState = TrendingRepositoriesScreenState(

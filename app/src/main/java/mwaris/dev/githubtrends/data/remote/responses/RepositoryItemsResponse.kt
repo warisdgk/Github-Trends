@@ -35,6 +35,12 @@ data class RepositoryItemsResponse(
     @SerializedName("description")
     private val description: String,
 
+    @SerializedName("stargazers_count")
+    private val stargazers_count: String?,
+
+    @SerializedName("language")
+    private val language: String?,
+
     ) : Parselable<Repository> {
 
     override fun parse(): Repository =
@@ -44,6 +50,8 @@ data class RepositoryItemsResponse(
             fullName = fullName,
             description = description,
             avatarUrl = owner.parse().avatarUrl,
+            stargazersCount = stargazers_count ?: "",
+            language = language ?: "",
         )
 }
 
