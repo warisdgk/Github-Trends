@@ -13,6 +13,7 @@ import mwaris.dev.githubtrends.base.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesState
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -51,8 +52,8 @@ class FailingTrendingRepositoriesListTest {
     }
 
     class UnavailableTrendingRepositoryListRepository : ITrendingListRepository {
-        override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesScreenState {
-            return TrendingRepositoriesScreenState(error = R.string.error_trending_repos_fetching)
+        override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesState {
+            return TrendingRepositoriesState.BackendError
         }
 
     }

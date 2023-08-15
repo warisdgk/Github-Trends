@@ -38,14 +38,13 @@ class TrendingRepositoriesLoadingStateTest {
                     testNetworkMonitor
                 )
 
-            remoteTrendingListDataSource.signalEmptyData(true)
-
             val renderedStates = mutableListOf<TrendingRepositoriesScreenState>()
 
             viewModel.dataState.observeForever {
                 renderedStates.add(it)
             }
 
+            remoteTrendingListDataSource.signalEmptyData(true)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(

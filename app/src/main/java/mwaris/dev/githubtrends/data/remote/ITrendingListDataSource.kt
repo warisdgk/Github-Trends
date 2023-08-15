@@ -1,7 +1,7 @@
 package mwaris.dev.githubtrends.data.remote
 
-import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesState
 
 interface ITrendingListDataSource {
-    suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesScreenState
+    suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesState
 }

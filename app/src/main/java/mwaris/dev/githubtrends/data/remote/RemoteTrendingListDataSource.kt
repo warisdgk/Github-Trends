@@ -1,9 +1,8 @@
 package mwaris.dev.githubtrends.data.remote
 
-import mwaris.dev.githubtrends.R
 import mwaris.dev.githubtrends.data.entities.Repository
 import mwaris.dev.githubtrends.data.exceptions.BackendException
-import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
+import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesState
 
 class RemoteTrendingListDataSource : ITrendingListDataSource {
 
@@ -40,16 +39,16 @@ class RemoteTrendingListDataSource : ITrendingListDataSource {
 
     private var signalEmptyData: Boolean = false
 
-    override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesScreenState {
+    override suspend fun getTrendingGithubRepositoriesList(): TrendingRepositoriesState {
 
         val repositoryState = try {
             if (signalEmptyData) {
-                TrendingRepositoriesScreenState(listOfRepositories = emptyList())
+                TrendingRepositoriesState.TrendingRepositories(emptyList())
             } else {
-                TrendingRepositoriesScreenState(listOfRepositories = listOfTrendingRepos)
+                TrendingRepositoriesState.TrendingRepositories(listOfTrendingRepos)
             }
         } catch (exception: BackendException) {
-            TrendingRepositoriesScreenState(error = R.string.error_trending_repos_fetching)
+            TrendingRepositoriesState.BackendError
         }
         return repositoryState
     }
