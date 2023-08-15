@@ -18,7 +18,7 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import mwaris.dev.githubtrends.R
-import mwaris.dev.githubtrends.testing.DummyRepositoriesData
+import mwaris.dev.githubtrends.testdoubles.DummyRepositoriesData
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingScreen
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState

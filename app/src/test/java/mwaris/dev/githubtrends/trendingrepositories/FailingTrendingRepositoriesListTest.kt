@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.R
-import mwaris.dev.githubtrends.testing.TestNetworkMonitor
+import mwaris.dev.githubtrends.testdoubles.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState

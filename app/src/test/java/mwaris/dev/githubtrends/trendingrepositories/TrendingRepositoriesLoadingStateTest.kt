@@ -8,8 +8,8 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
-import mwaris.dev.githubtrends.testing.TestNetworkMonitor
-import mwaris.dev.githubtrends.data.remote.RemoteTrendingListDataSource
+import mwaris.dev.githubtrends.testdoubles.TestTrendingRepositoriesRemoteDataSource
+import mwaris.dev.githubtrends.testdoubles.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
@@ -20,8 +20,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantExecutorExtension::class)
 class TrendingRepositoriesLoadingStateTest {
 
-    private val remoteTrendingListDataSource = RemoteTrendingListDataSource()
-    private val trendingListRepository = TrendingListRepository(remoteTrendingListDataSource)
+    private val trendingRepositoriesRemoteDataSource = TestTrendingRepositoriesRemoteDataSource()
+    private val trendingListRepository = TrendingListRepository(trendingRepositoriesRemoteDataSource)
     private val testNetworkMonitor = TestNetworkMonitor()
     private val savedStateHandle =  SavedStateHandle()
 
@@ -47,7 +47,7 @@ class TrendingRepositoriesLoadingStateTest {
                 renderedStates.add(it)
             }
 
-            remoteTrendingListDataSource.signalEmptyData(true)
+            trendingRepositoriesRemoteDataSource.signalEmptyData(true)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(

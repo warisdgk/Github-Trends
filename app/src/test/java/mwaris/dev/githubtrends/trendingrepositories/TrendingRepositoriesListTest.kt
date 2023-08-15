@@ -8,22 +8,21 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
-import mwaris.dev.githubtrends.testing.TestNetworkMonitor
-import mwaris.dev.githubtrends.testing.DummyRepositoriesData
-import mwaris.dev.githubtrends.data.remote.RemoteTrendingListDataSource
+import mwaris.dev.githubtrends.testdoubles.TestTrendingRepositoriesRemoteDataSource
+import mwaris.dev.githubtrends.testdoubles.TestNetworkMonitor
+import mwaris.dev.githubtrends.testdoubles.DummyRepositoriesData
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(InstantExecutorExtension::class)
 class TrendingRepositoriesListTest {
 
-    private val remoteTrendingListDataSource = RemoteTrendingListDataSource()
-    private val trendingListRepository = TrendingListRepository(remoteTrendingListDataSource)
+    private val trendingRepositoriesRemoteDataSource = TestTrendingRepositoriesRemoteDataSource()
+    private val trendingListRepository = TrendingListRepository(trendingRepositoriesRemoteDataSource)
     private val savedStateHandle = SavedStateHandle()
     private val testNetworkMonitor = TestNetworkMonitor()
 
@@ -45,7 +44,7 @@ class TrendingRepositoriesListTest {
                     testNetworkMonitor
                 )
 
-            remoteTrendingListDataSource.signalEmptyData(true)
+            trendingRepositoriesRemoteDataSource.signalEmptyData(true)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(
@@ -69,7 +68,7 @@ class TrendingRepositoriesListTest {
                 testNetworkMonitor
             )
 
-            remoteTrendingListDataSource.signalEmptyData(false)
+            trendingRepositoriesRemoteDataSource.signalEmptyData(false)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(
