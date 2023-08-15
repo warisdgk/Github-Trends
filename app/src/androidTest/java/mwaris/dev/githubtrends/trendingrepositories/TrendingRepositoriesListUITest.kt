@@ -145,4 +145,24 @@ class TrendingRepositoriesListUITest {
             .onNodeWithText("Trending")
             .assertExists()
     }
+
+    @Test
+    fun showsPullToRefresh(){
+        composeTestRule.setContent {
+            GithubTrendsTheme {
+                TrendingRepositoriesListingScreen(
+                    onRetry = {},
+                    isOffline = false,
+                    isLoading = true,
+                    trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
+                        listOfRepositories = trendingRepositoriesList
+                    )
+                )
+            }
+        }
+
+        composeTestRule
+            .onNodeWithTag("pull-to-refresh")
+            .assertExists()
+    }
 }
