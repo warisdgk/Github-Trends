@@ -18,7 +18,7 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import mwaris.dev.githubtrends.R
-import mwaris.dev.githubtrends.data.entities.Repository
+import mwaris.dev.githubtrends.testing.DummyRepositoriesData
 import mwaris.dev.githubtrends.ui.theme.GithubTrendsTheme
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingScreen
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
@@ -29,6 +29,8 @@ class TrendingRepositoriesListUITest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+
+    private val trendingRepositoriesList = DummyRepositoriesData.listOfTrendingRepositories
 
     @Test
     fun showsNetworkUnavailable() {
@@ -60,16 +62,6 @@ class TrendingRepositoriesListUITest {
     @Test
     fun showsTrendingRepositoriesList() {
 
-        val trendingRepositoriesList: List<Repository> = listOf(
-            Repository(
-                "23096959",
-                "go",
-                "golang/go",
-                "https://avatars.githubusercontent.com/u/4314092?v=4",
-                "The Go programming language"
-            )
-        )
-
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
@@ -90,16 +82,6 @@ class TrendingRepositoriesListUITest {
 
     @Test
     fun showsShimmerEffectInCaseOfLoadingData() {
-
-        val trendingRepositoriesList: List<Repository> = listOf(
-            Repository(
-                "23096959",
-                "go",
-                "golang/go",
-                "https://avatars.githubusercontent.com/u/4314092?v=4",
-                "The Go programming language"
-            )
-        )
 
         composeTestRule.setContent {
             GithubTrendsTheme {

@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.R
-import mwaris.dev.githubtrends.base.TestNetworkMonitor
+import mwaris.dev.githubtrends.testing.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
@@ -22,22 +22,23 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantExecutorExtension::class)
 class FailingTrendingRepositoriesListTest {
 
+    private val trendingListRepository = UnavailableTrendingRepositoryListRepository()
+    private val testNetworkMonitor = TestNetworkMonitor()
+    private val savedStateHandle = SavedStateHandle()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val testDispatcher = UnconfinedTestDispatcher()
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun failingBackendError() = runTest {
-        val testDispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(testDispatcher)
         try {
-            val trendingListRepository = UnavailableTrendingRepositoryListRepository()
-            val testNetworkMonitor = TestNetworkMonitor()
-            val savedStateHandle = SavedStateHandle()
-            val viewModel =
-                TrendingRepositoriesListingViewModel(
-                    trendingListRepository,
-                    savedStateHandle,
-                    testDispatcher,
-                    testNetworkMonitor
-                )
+            val viewModel = TrendingRepositoriesListingViewModel(
+                trendingListRepository,
+                savedStateHandle,
+                testDispatcher,
+                testNetworkMonitor
+            )
 
             viewModel.getTrendingGithubRepositoriesList()
 
@@ -45,7 +46,6 @@ class FailingTrendingRepositoriesListTest {
                 TrendingRepositoriesScreenState(error = R.string.error_trending_repos_fetching),
                 viewModel.dataState.value
             )
-
         } finally {
             Dispatchers.resetMain()
         }

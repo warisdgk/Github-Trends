@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
-import mwaris.dev.githubtrends.base.TestNetworkMonitor
+import mwaris.dev.githubtrends.testing.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.remote.RemoteTrendingListDataSource
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
@@ -20,16 +20,21 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantExecutorExtension::class)
 class TrendingRepositoriesLoadingStateTest {
 
+    private val remoteTrendingListDataSource = RemoteTrendingListDataSource()
+    private val trendingListRepository = TrendingListRepository(remoteTrendingListDataSource)
+    private val testNetworkMonitor = TestNetworkMonitor()
+    private val savedStateHandle =  SavedStateHandle()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val testDispatcher = UnconfinedTestDispatcher()
+
+    private val renderedStates = mutableListOf<TrendingRepositoriesScreenState>()
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun trendingRepositoriesStatesValidation() = runTest {
-        val testDispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(testDispatcher)
         try {
-            val remoteTrendingListDataSource = RemoteTrendingListDataSource()
-            val trendingListRepository = TrendingListRepository(remoteTrendingListDataSource)
-            val testNetworkMonitor = TestNetworkMonitor()
-            val savedStateHandle =  SavedStateHandle()
             val viewModel =
                 TrendingRepositoriesListingViewModel(
                     trendingListRepository,
@@ -37,8 +42,6 @@ class TrendingRepositoriesLoadingStateTest {
                     testDispatcher,
                     testNetworkMonitor
                 )
-
-            val renderedStates = mutableListOf<TrendingRepositoriesScreenState>()
 
             viewModel.dataState.observeForever {
                 renderedStates.add(it)
