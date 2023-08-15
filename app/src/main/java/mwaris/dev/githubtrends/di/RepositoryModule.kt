@@ -8,6 +8,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import mwaris.dev.githubtrends.base.ConnectivityManagerNetworkMonitor
 import mwaris.dev.githubtrends.base.NetworkMonitor
+import mwaris.dev.githubtrends.data.remote.ITrendingListDataSource
+import mwaris.dev.githubtrends.data.remote.RemoteTrendingListDataSource
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import javax.inject.Singleton
@@ -18,8 +20,16 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesITrendingListRepository(): ITrendingListRepository {
-        return TrendingListRepository()
+    fun providesITrendingListRepository(
+        remoteTrendingRepositoriesDataSource: ITrendingListDataSource
+    ): ITrendingListRepository {
+        return TrendingListRepository(remoteTrendingRepositoriesDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun providesIRemoteDataSource(): ITrendingListDataSource {
+        return RemoteTrendingListDataSource()
     }
 
     @Provides

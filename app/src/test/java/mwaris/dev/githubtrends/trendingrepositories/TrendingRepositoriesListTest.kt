@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.setMain
 import mwaris.dev.githubtrends.InstantExecutorExtension
 import mwaris.dev.githubtrends.base.TestNetworkMonitor
 import mwaris.dev.githubtrends.data.entities.Repository
+import mwaris.dev.githubtrends.data.remote.RemoteTrendingListDataSource
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesListingViewModel
 import mwaris.dev.githubtrends.ui.trendingrepositories.TrendingRepositoriesScreenState
@@ -26,7 +27,8 @@ class TrendingRepositoriesListTest {
         val testDispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(testDispatcher)
         try {
-            val trendingListRepository = TrendingListRepository()
+            val remoteTrendingListDataSource = RemoteTrendingListDataSource()
+            val trendingListRepository = TrendingListRepository(remoteTrendingListDataSource)
             val savedStateHandle = SavedStateHandle()
             val testNetworkMonitor = TestNetworkMonitor()
             val viewModel =
@@ -37,7 +39,7 @@ class TrendingRepositoriesListTest {
                     testNetworkMonitor
                 )
 
-            trendingListRepository.signalEmptyData(true)
+            remoteTrendingListDataSource.signalEmptyData(true)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(
@@ -86,7 +88,8 @@ class TrendingRepositoriesListTest {
                 ),
             )
 
-            val trendingListRepository = TrendingListRepository()
+            val remoteTrendingListDataSource = RemoteTrendingListDataSource()
+            val trendingListRepository = TrendingListRepository(remoteTrendingListDataSource)
             val testNetworkMonitor = TestNetworkMonitor()
             val savedStateHandle = SavedStateHandle()
             val viewModel =
@@ -97,7 +100,7 @@ class TrendingRepositoriesListTest {
                     testNetworkMonitor
                 )
 
-            trendingListRepository.signalEmptyData(false)
+            remoteTrendingListDataSource.signalEmptyData(false)
             viewModel.getTrendingGithubRepositoriesList()
 
             assertEquals(
