@@ -153,7 +153,7 @@ class TrendingRepositoriesListUITest {
                 TrendingRepositoriesListingScreen(
                     onRetry = {},
                     isOffline = false,
-                    isLoading = true,
+                    isLoading = false,
                     trendingRepositoriesScreenState = TrendingRepositoriesScreenState(
                         listOfRepositories = trendingRepositoriesList
                     )

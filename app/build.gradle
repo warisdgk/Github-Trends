@@ -118,6 +118,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
     implementation "androidx.compose.runtime:runtime-livedata"
 
+    //noinspection GradleDependency Only for Pull Refresh (latest version has some issue)
+    implementation "androidx.compose.material:material:$materialVersion"
+
     //Coil For Image Loading
     implementation "io.coil-kt:coil-compose:2.4.0"
 

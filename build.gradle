@@ -18,4 +18,5 @@ ext {
     retrofitVersion = "2.9.0"
     chuckerVersion = "3.5.2"
     leakCanaryVersion = "2.12"
+    materialVersion = "1.3.0"
 }
