@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -78,6 +79,15 @@ class TrendingRepositoriesListUITest {
         composeTestRule
             .onNodeWithTag("trending-repositories-list")
             .assertExists()
+
+        composeTestRule
+            .onAllNodesWithContentDescription("Language Icon")
+            .assertCountEquals(trendingRepositoriesList.size)
+
+        composeTestRule
+            .onAllNodesWithContentDescription("Star Icon")
+            .assertCountEquals(trendingRepositoriesList.size)
+
     }
 
     @Test
@@ -147,7 +157,7 @@ class TrendingRepositoriesListUITest {
     }
 
     @Test
-    fun showsPullToRefresh(){
+    fun showsPullToRefresh() {
         composeTestRule.setContent {
             GithubTrendsTheme {
                 TrendingRepositoriesListingScreen(
