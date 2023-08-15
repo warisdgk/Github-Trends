@@ -5,9 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import mwaris.dev.githubtrends.data.remote.ITrendingListDataSource
-import mwaris.dev.githubtrends.data.remote.RemoteTrendingListDataSource
+import mwaris.dev.githubtrends.data.remote.ITrendingRepositoriesApi
+import mwaris.dev.githubtrends.data.remote.TrendingRepositoriesRemoteDataSource
 import mwaris.dev.githubtrends.data.repositories.ITrendingListRepository
 import mwaris.dev.githubtrends.data.repositories.TrendingListRepository
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -16,8 +18,18 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesRemoteDataSource(): ITrendingListDataSource {
-        return RemoteTrendingListDataSource()
+    fun providesRemoteDataSource(
+        trendingRepositoriesApi: ITrendingRepositoriesApi
+    ): ITrendingListDataSource {
+        return TrendingRepositoriesRemoteDataSource(trendingRepositoriesApi)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGithubAPI(
+        @TrendingRepositoriesAPIClient retrofit: Retrofit
+    ): ITrendingRepositoriesApi {
+        return retrofit.create(ITrendingRepositoriesApi::class.java)
     }
 
     @Provides
