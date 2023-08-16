@@ -32,7 +32,7 @@ To ensure proper feedback loop for strict TDD I have used the following CICD sta
     <img width="600" src="https://github.com/warisdgk/Github-Trends/blob/5f8ffe274b3c2a45583c39352e87a96bdaaeec5d/docs/CICD%20Explained.png" alt="CICD Flow Explained">
 </p>
 
-# Firebase TestLab Limitations:
+## Firebase TestLab Limitations:
 
 I have integrated Firebase Test Lab for UI test executions, Currently, the  command that executes UI tests is commented out due to the Firebase Test Lab limitations for Free Tier. If you hit the limitations any subsequent jobs will fail stating the used of free quota limits.
 
